@@ -16,14 +16,16 @@ class ShadowModelBundle(sklearn.base.BaseEstimator):
     :param shadow_dataset_size: Size of the training data for each shadow model
     :param num_models: Number of shadow models
     :param seed: Random seed
-    :param ModelSerializer serializer: Serializer for the models. If not None,
-            the shadow models will not be stored in memory, but rather loaded
+    :param ModelSerializer serializer: Serializer for the models. If None,
+            the shadow models will be stored in memory. Otherwise, loaded
             and saved when needed.
     """
-    MODEL_ID_FMT = 'shadow_%d'
 
-    def __init__(self, model_fn, shadow_dataset_size,
-                 num_models=20, seed=42, serializer=None):
+    MODEL_ID_FMT = "shadow_%d"
+
+    def __init__(
+        self, model_fn, shadow_dataset_size, num_models=20, seed=42, serializer=None
+    ):
         super().__init__()
         self.model_fn = model_fn
         self.shadow_dataset_size = shadow_dataset_size
@@ -43,10 +45,10 @@ class ShadowModelBundle(sklearn.base.BaseEstimator):
                 each shadow model.
 
         .. note::
-        Be careful not to hold out some of the passed data for validation
-        (e.g., if using Keras, passing `fit_kwargs=dict(validation_split=0.7)`).
-        Such data will be incorrectly marked as "used in training", whereas
-        it was not.
+            Be careful not to hold out some of the passed data for validation
+            (e.g., if using Keras, passing `fit_kwargs=dict(validation_split=0.7)`).
+            Such data will be incorrectly marked as "used in training", whereas
+            it was not.
         """
         self._fit(X, y, verbose=verbose, fit_kwargs=fit_kwargs)
         return self._transform(verbose=verbose)
@@ -98,21 +100,22 @@ class ShadowModelBundle(sklearn.base.BaseEstimator):
         for i in self._get_model_iterator(verbose=verbose):
             # Pick indices for this shadow model.
             shadow_indices = self._prng.choice(
-                indices, 2 * self.shadow_dataset_size, replace=False)
-            train_indices = shadow_indices[:self.shadow_dataset_size]
-            test_indices = shadow_indices[self.shadow_dataset_size:]
+                indices, 2 * self.shadow_dataset_size, replace=False
+            )
+            train_indices = shadow_indices[: self.shadow_dataset_size]
+            test_indices = shadow_indices[self.shadow_dataset_size :]
             X_train, y_train = X[train_indices], y[train_indices]
             self.shadow_train_indices_.append(train_indices)
             self.shadow_test_indices_.append(test_indices)
 
-            if pseudo: continue
+            if pseudo:
+                continue
 
             # Train the shadow model.
             shadow_model = self.model_fn()
             shadow_model.fit(X_train, y_train, **fit_kwargs)
             if self.serializer is not None:
-                self.serializer.save(
-                    ShadowModelBundle.MODEL_ID_FMT % i, shadow_model)
+                self.serializer.save(ShadowModelBundle.MODEL_ID_FMT % i, shadow_model)
             else:
                 self.shadow_models_.append(shadow_model)
 
@@ -122,8 +125,7 @@ class ShadowModelBundle(sklearn.base.BaseEstimator):
         return self
 
     def _pseudo_fit(self, X, y, verbose=False, fit_kwargs=None):
-        self._fit(X, y, verbose=verbose, fit_kwargs=fit_kwargs,
-                  pseudo=True)
+        self._fit(X, y, verbose=verbose, fit_kwargs=fit_kwargs, pseudo=True)
 
     def _transform(self, shadow_indices=None, verbose=False):
         """Produce in/out data for training the attack model.
@@ -136,7 +138,8 @@ class ShadowModelBundle(sklearn.base.BaseEstimator):
         shadow_label_array = []
 
         model_index_iter = self._get_model_iterator(
-            indices=shadow_indices, verbose=verbose)
+            indices=shadow_indices, verbose=verbose
+        )
 
         for i in model_index_iter:
             shadow_model = self._get_model(i)
@@ -146,7 +149,8 @@ class ShadowModelBundle(sklearn.base.BaseEstimator):
             train_data = self.X_fit_[train_indices], self.y_fit_[train_indices]
             test_data = self.X_fit_[test_indices], self.y_fit_[test_indices]
             shadow_data, shadow_labels = prepare_attack_data(
-                    shadow_model, train_data, test_data)
+                shadow_model, train_data, test_data
+            )
 
             shadow_data_array.append(shadow_data)
             shadow_label_array.append(shadow_labels)
@@ -193,9 +197,11 @@ class AttackModelBundle(sklearn.base.BaseEstimator):
             class labels.
     """
 
-    MODEL_ID_FMT = 'attack_%d'
+    MODEL_ID_FMT = "attack_%d"
 
-    def __init__(self, model_fn, num_classes, serializer=None, class_one_hot_coded=True):
+    def __init__(
+        self, model_fn, num_classes, serializer=None, class_one_hot_coded=True
+    ):
         self.model_fn = model_fn
         self.num_classes = num_classes
         self.serializer = serializer
@@ -211,8 +217,8 @@ class AttackModelBundle(sklearn.base.BaseEstimator):
         :param fit_kwargs: Arguments that will be passed to the fit call for
                 each attack model.
         """
-        X_total = X[:, :self.num_classes]
-        classes = X[:, self.num_classes:]
+        X_total = X[:, : self.num_classes]
+        classes = X[:, self.num_classes :]
 
         datasets_by_class = []
         data_indices = np.arange(X_total.shape[0])
@@ -222,8 +228,7 @@ class AttackModelBundle(sklearn.base.BaseEstimator):
             else:
                 class_indices = data_indices[np.squeeze(classes) == i]
 
-            datasets_by_class.append(
-                (X_total[class_indices], y[class_indices]))
+            datasets_by_class.append((X_total[class_indices], y[class_indices]))
 
         if self.serializer is None:
             self.attack_models_ = []
@@ -252,8 +257,8 @@ class AttackModelBundle(sklearn.base.BaseEstimator):
 
     def predict_proba(self, X):
         result = [0] * X.shape[0]
-        shadow_preds = X[:, :self.num_classes]
-        classes = X[:, self.num_classes:]
+        shadow_preds = X[:, : self.num_classes]
+        classes = X[:, self.num_classes :]
 
         data_indices = np.arange(shadow_preds.shape[0])
         for i in range(self.num_classes):
@@ -268,4 +273,3 @@ class AttackModelBundle(sklearn.base.BaseEstimator):
                 result[class_index] = np.squeeze(membership_preds[j])
 
         return np.array(result)
-

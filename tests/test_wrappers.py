@@ -7,7 +7,7 @@ from torch.nn import functional as F
 
 from mia.wrappers import TorchWrapper, ExpLrScheduler
 
-torch.set_default_tensor_type('torch.DoubleTensor')
+torch.set_default_tensor_type("torch.DoubleTensor")
 
 WIDTH = 32
 HEIGHT = 32
@@ -38,18 +38,15 @@ class Net(nn.Module):
         return x
 
 
-@pytest.mark.parametrize('lr_scheduler',
-        [None, ExpLrScheduler(lr_decay_every_epochs=1)])
-@pytest.mark.parametrize('enable_cuda',
-        [False])
-@pytest.mark.parametrize('use_torch_arrays',
-        [True, False])
+@pytest.mark.parametrize(
+    "lr_scheduler", [None, ExpLrScheduler(lr_decay_every_epochs=1)]
+)
+@pytest.mark.parametrize("enable_cuda", [False])
+@pytest.mark.parametrize("use_torch_arrays", [True, False])
 def test_torch_wrapper_fit(data, lr_scheduler, enable_cuda, use_torch_arrays):
     model = TorchWrapper(
-            Net,
-            nn.CrossEntropyLoss,
-            torch.optim.Adam,
-            enable_cuda=enable_cuda)
+        Net, nn.CrossEntropyLoss, torch.optim.Adam, enable_cuda=enable_cuda
+    )
 
     (X_train, y_train), (X_test, y_test) = data
     y_train = np.argmax(y_train, axis=1)
@@ -59,9 +56,7 @@ def test_torch_wrapper_fit(data, lr_scheduler, enable_cuda, use_torch_arrays):
         X_train = torch.tensor(X_train)
         y_train = torch.tensor(y_train)
 
-    model.fit(X_train, y_train, epochs=2,
-              verbose=True, validation_split=0.1)
+    model.fit(X_train, y_train, epochs=2, verbose=True, validation_split=0.1)
 
     # Expected accuracy is greater than 30%.
     assert np.mean(model.predict(X_test) == y_test) > 0.3
-

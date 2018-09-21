@@ -19,23 +19,22 @@ class ExpLrScheduler(object):
     Based on https://discuss.pytorch.org/t/fine-tuning-squeezenet/3855/7
     """
 
-    def __init__(self, init_lr=0.001, decay_factor=0.1,
-                 lr_decay_every_epochs=7,
-                 verbose=False):
+    def __init__(
+        self, init_lr=0.001, decay_factor=0.1, lr_decay_every_epochs=7, verbose=False
+    ):
         self.init_lr = init_lr
         self.decay_factor = decay_factor
         self.lr_decay_every_epochs = lr_decay_every_epochs
         self.verbose = verbose
 
     def __call__(self, optimizer, epoch):
-        lr = self.init_lr * (self.decay_factor ** (
-                epoch // self.lr_decay_every_epochs))
+        lr = self.init_lr * (self.decay_factor ** (epoch // self.lr_decay_every_epochs))
 
         if self.verbose and (epoch % self.lr_decay_every_epochs == 0):
-            print('LR is set to {}'.format(lr))
+            print("LR is set to {}".format(lr))
 
         for param_group in optimizer.param_groups:
-            param_group['lr'] = lr
+            param_group["lr"] = lr
 
         return optimizer
 
@@ -55,8 +54,7 @@ def _torch_to_dataloader(X, y=None, *args, **kwargs):
     return DataLoader(dataset, *args, **kwargs)
 
 
-def _input_to_dataloader(X, y=None, offset=None, max_examples=None,
-                         *args, **kwargs):
+def _input_to_dataloader(X, y=None, offset=None, max_examples=None, *args, **kwargs):
     if offset is None:
         offset = 0
     if max_examples is not None:
@@ -79,19 +77,18 @@ class TorchWrapperSerializer(BaseModelSerializer):
         self.verbose = verbose
 
     def _get_val_data_path(self, model_id):
-        return os.path.join(self._get_model_path(model_id, '__val_data'))
+        return os.path.join(self._get_model_path(model_id, "__val_data"))
 
     def save(self, model_id, model):
-        print('Saved %s' % model_id)
+        print("Saved %s" % model_id)
         torch.save(model.module_.state_dict(), self._get_model_path(model_id))
         torch.save(model.val_loader_, self._get_val_data_path(model_id))
 
     def load(self, model_id):
         model = self.model_fn()
-        model.module_.load_state_dict(torch.load(
-            self._get_model_path(model_id)))
+        model.module_.load_state_dict(torch.load(self._get_model_path(model_id)))
         if self.verbose:
-            print('Loaded %s' % model_id)
+            print("Loaded %s" % model_id)
         return model
 
 
@@ -113,13 +110,20 @@ class TorchWrapper(object):
     :param ModelSerializer serializer: Model serializer to save the best model.
     """
 
-    STATS_FMT = '[{:>5s}] loss: {:+.4f}, acc: {:.4f}'
-    BEST_MODEL_ID = '__fit_best'
+    STATS_FMT = "[{:>5s}] loss: {:+.4f}, acc: {:.4f}"
+    BEST_MODEL_ID = "__fit_best"
 
-    def __init__(self, module, criterion, optimizer,
-                 module_params=None, optimizer_params=None,
-                 lr_scheduler=None, enable_cuda=True,
-                 serializer=None):
+    def __init__(
+        self,
+        module,
+        criterion,
+        optimizer,
+        module_params=None,
+        optimizer_params=None,
+        lr_scheduler=None,
+        enable_cuda=True,
+        serializer=None,
+    ):
         self.module = module
         self.criterion = criterion
         self.optimizer = optimizer
@@ -136,14 +140,13 @@ class TorchWrapper(object):
 
         if optimizer_params is None:
             optimizer_params = {}
-        self.optimizer_ = optimizer(self.module_.parameters(),
-                                    **optimizer_params)
+        self.optimizer_ = optimizer(self.module_.parameters(), **optimizer_params)
 
         self.lr_scheduler = lr_scheduler
         if lr_scheduler is None:
             self.lr_scheduler = lambda opt, *args, **kwargs: opt
 
-    def fit_step(self, batch, phase='train'):
+    def fit_step(self, batch, phase="train"):
         """
         Run a single training step.
 
@@ -151,14 +154,13 @@ class TorchWrapper(object):
         :param phase: Phase. One of ['train', 'val']. If in val, does not
                       update the model parameters.
         """
-        self.module_.train(phase == 'train')
+        self.module_.train(phase == "train")
         inputs, labels = batch
         batch_size = len(inputs)
 
         # Wrap them in Variable
         if self.enable_cuda:
-            inputs, labels = Variable(
-                inputs.cuda()), Variable(labels.cuda())
+            inputs, labels = Variable(inputs.cuda()), Variable(labels.cuda())
         else:
             inputs, labels = Variable(inputs), Variable(labels)
 
@@ -173,7 +175,7 @@ class TorchWrapper(object):
         loss = self.criterion_(outputs, labels)
 
         # Backward + optimize only if in training phase.
-        if phase == 'train':
+        if phase == "train":
             loss.backward()
             self.optimizer_.step()
 
@@ -183,8 +185,17 @@ class TorchWrapper(object):
 
         return batch_loss, batch_size, num_correct_preds
 
-    def fit(self, X, y=None, batch_size=32, epochs=20, shuffle=True,
-            validation_split=None, validation_data=None, verbose=False):
+    def fit(
+        self,
+        X,
+        y=None,
+        batch_size=32,
+        epochs=20,
+        shuffle=True,
+        validation_split=None,
+        validation_data=None,
+        verbose=False,
+    ):
         """
         Fit a torch classifier.
 
@@ -210,32 +221,39 @@ class TorchWrapper(object):
             validation_data = (X, y)
 
         train_loader = _input_to_dataloader(
-            X, y, batch_size=batch_size, shuffle=shuffle,
-            max_examples=max_train_examples)
+            X,
+            y,
+            batch_size=batch_size,
+            shuffle=shuffle,
+            max_examples=max_train_examples,
+        )
 
-        phases = ['train']
+        phases = ["train"]
         if validation_data is not None:
             self.val_loader_ = val_loader = _input_to_dataloader(
-                *validation_data, batch_size=batch_size,
-                shuffle=shuffle, offset=val_offset)
-            phases.append('val')
+                *validation_data,
+                batch_size=batch_size,
+                shuffle=shuffle,
+                offset=val_offset
+            )
+            phases.append("val")
             best_val_loss = 0.0
 
         since = time.time()
 
         for epoch in range(epochs):
             if verbose:
-                print('Epoch %d/%d' % (epoch + 1, epochs))
+                print("Epoch %d/%d" % (epoch + 1, epochs))
 
             # Each epoch has a training and validation phase.
             for phase in phases:
-                if phase == 'train':
+                if phase == "train":
                     self.optimizer_ = self.lr_scheduler(self.optimizer_, epoch)
                     data_iter = train_loader
                 else:
                     data_iter = val_loader
 
-                if verbose and phase == 'train':
+                if verbose and phase == "train":
                     prog_bar = tqdm.tqdm(total=len(data_iter.dataset))
 
                 epoch_dataset_size = 0
@@ -245,18 +263,20 @@ class TorchWrapper(object):
                 # Run through the data in minibatches.
                 for data in data_iter:
                     batch_loss, batch_size, num_correct_preds = self.fit_step(
-                            data, phase=phase)
+                        data, phase=phase
+                    )
 
                     # Batch statistics.
                     epoch_dataset_size += batch_size
                     running_loss += batch_loss
                     running_num_correct_preds += num_correct_preds
 
-                    if verbose and phase == 'train':
+                    if verbose and phase == "train":
                         batch_stats_str = TorchWrapper.STATS_FMT.format(
                             phase,
                             batch_loss / batch_size,
-                            num_correct_preds / batch_size)
+                            num_correct_preds / batch_size,
+                        )
                         prog_bar.set_description(batch_stats_str)
                         prog_bar.update(batch_size)
 
@@ -267,25 +287,29 @@ class TorchWrapper(object):
                 if verbose:
                     prog_bar.close()
                     epoch_stats_str = TorchWrapper.STATS_FMT.format(
-                        phase, epoch_loss, epoch_acc)
+                        phase, epoch_loss, epoch_acc
+                    )
                     print(epoch_stats_str)
 
                 # Determine if model is the best.
-                if phase == 'val' and self.serializer is not None:
+                if phase == "val" and self.serializer is not None:
                     if epoch_loss < best_loss:
                         best_loss = epoch_loss
                         # TODO: Needs more work. Check the temperature
                         #       scaling class. Neural Network should change.
                         self.serializer.save(TorchWrapper.BEST_MODEL_ID)
                         if verbose:
-                            print('New best accuracy: %.4f' % best_loss)
+                            print("New best accuracy: %.4f" % best_loss)
 
         time_elapsed = time.time() - since
-        print('Training complete in {:.0f}m {:.0f}s'.format(
-            time_elapsed // 60, time_elapsed % 60))
+        print(
+            "Training complete in {:.0f}m {:.0f}s".format(
+                time_elapsed // 60, time_elapsed % 60
+            )
+        )
 
         # Load the best model.
-        if 'val' in phases and self.serializer is not None:
+        if "val" in phases and self.serializer is not None:
             model_wrapper = self.serializer.load(TorchWrapper.BEST_MODEL_ID)
             self.module_ = model_wrapper.module_
             self.val_loader_ = model_wrapper.val_loader_
@@ -319,4 +343,3 @@ class TorchWrapper(object):
         :param batch_size: Batch size
         """
         return np.argmax(self.predict_proba(X, batch_size), axis=1)
-
