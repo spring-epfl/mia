@@ -7,6 +7,7 @@ from setuptools import setup
 
 INSTALL_REQUIRES = [
     'numpy',
+    'scipy',
     'scikit-learn',
     'torch',
     'tqdm',
