@@ -1,0 +1,8 @@
+__version__ = '0.0.1'
+__title__ = 'mia'
+__author__ = 'Bogdan Kulynych, Mohammad Yaghini'
+__email__ = 'hello@bogdankulynych.me, m.yaghini@epfl.ch'
+__copyright__ = '2018 by Bogdan Kulynych, Mohammad Yaghini (EPFL SPRING Lab)'
+__description__ = 'A library for running membership inference attacks against ML models'
+__url__ = 'https://github.com/spring-epfl/mia'
+__license__ = 'AGPLv3+'

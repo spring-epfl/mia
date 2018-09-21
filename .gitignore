@@ -71,3 +71,4 @@ ENV/
 
 # Temp files
 __*
+!__init__.py
