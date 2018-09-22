@@ -7,7 +7,7 @@ from torch.nn import functional as F
 
 from mia.wrappers import TorchWrapper, ExpLrScheduler
 
-torch.set_default_tensor_type("torch.DoubleTensor")
+torch.set_default_tensor_type("torch.FloatTensor")
 
 WIDTH = 32
 HEIGHT = 32
@@ -60,3 +60,4 @@ def test_torch_wrapper_fit(data, lr_scheduler, enable_cuda, use_torch_arrays):
 
     # Expected accuracy is greater than 30%.
     assert np.mean(model.predict(X_test) == y_test) > 0.3
+
