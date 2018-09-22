@@ -19,7 +19,7 @@ from mia.estimators import ShadowModelBundle
 from mia.estimators import prepare_attack_data
 from mia.serialization import BaseModelSerializer
 
-torch.set_default_tensor_type("torch.DoubleTensor")
+torch.set_default_tensor_type("torch.FloatTensor")
 
 
 WIDTH = 32
