@@ -155,8 +155,8 @@ class ShadowModelBundle(sklearn.base.BaseEstimator):
             shadow_data_array.append(shadow_data)
             shadow_label_array.append(shadow_labels)
 
-        X_transformed = np.vstack(shadow_data_array)
-        y_transformed = np.hstack(shadow_label_array)
+        X_transformed = np.vstack(shadow_data_array).astype('float32')
+        y_transformed = np.hstack(shadow_label_array).astype('float32')
         return X_transformed, y_transformed
 
 
