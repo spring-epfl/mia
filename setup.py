@@ -20,11 +20,9 @@ SETUP_REQUIRES = [
 TEST_REQUIRES = [
     'pytest',
     'pytest-lazy-fixture',
-    'tensorflow==1.10.1',
-    'skorch==0.3.0',
+    'tensorflow',
+    'skorch',
     'keras',
-    # 'Keras==2.2.2',
-    # 'Keras-Preprocessing==1.0.2',
 ]
 
 DEV_REQUIRES = TEST_REQUIRES + [
