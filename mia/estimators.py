@@ -45,10 +45,10 @@ class ShadowModelBundle(sklearn.base.BaseEstimator):
                 each shadow model.
 
         .. note::
-            Be careful not to hold out some of the passed data for validation
+            Be careful when holding out some of the passed data for validation
             (e.g., if using Keras, passing `fit_kwargs=dict(validation_split=0.7)`).
-            Such data will be incorrectly marked as "used in training", whereas
-            it was not.
+            Such data will be marked as "used in training", whereas it was used for
+            validation. Doing so may decrease the success of the attack.
         """
         self._fit(X, y, verbose=verbose, fit_kwargs=fit_kwargs)
         return self._transform(verbose=verbose)
