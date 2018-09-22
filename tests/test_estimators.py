@@ -100,7 +100,7 @@ class ShadowNet(nn.Module):
 
 
 def torch_shadow_model_fn():
-    model = skorch.net.NeuralNetClassifier(
+    model = skorch.NeuralNetClassifier(
         module=ShadowNet, max_epochs=5, criterion=CrossEntropyOneHot, train_split=None
     )
     return model
@@ -173,7 +173,7 @@ class AttackNet(nn.Module):
 
 
 def torch_attack_model_fn():
-    model = skorch.net.NeuralNetClassifier(
+    model = skorch.NeuralNetClassifier(
         module=AttackNet, max_epochs=5, criterion=nn.BCELoss, train_split=None
     )
     return model

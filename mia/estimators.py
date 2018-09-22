@@ -1,5 +1,5 @@
 """
-Scikit-like estimators for membership inference attack and shadow models.
+Scikit-like estimators for the attack model and shadow models.
 """
 
 import sklearn
