@@ -37,7 +37,7 @@ with open(os.path.join(here, 'README.rst')) as f:
 
 
 with open(os.path.join(here, 'mia/__init__.py')) as f:
-    matches = re.findall(r'(__.+__) = \'(.*)\'', f.read())
+    matches = re.findall(r'(__.+__) = \"(.*)\"', f.read())
     for var_name, var_value in matches:
         globals()[var_name] = var_value
 
