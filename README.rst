@@ -61,7 +61,7 @@ Let ``target_model_fn()`` return the target model architecture as an sklearn-lik
 attack is white-box, meaning the attacker is assumed to know the architecture. Let ``NUM_CLASSES``
 be the number of classes of the classification problem.
 
-First, the attacker needs to train several *shadow models* ---models that mimick the target model---
+First, the attacker needs to train several *shadow models* —that mimick the target model—
 on different datasets sampled from the original data distribution. The following code snippet
 initializes a *shadow model bundle*, and runs the training of the shadows. For each shadow model,
 ``2 * SHADOW_DATASET_SIZE`` examples are sampled without replacement from the full attacker's
