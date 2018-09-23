@@ -32,11 +32,11 @@ This library:
 Getting started
 ===============
 
-Clone the repo and install using pip:
+You can install mia from PyPI:
 
 .. code-block::  bash
 
-    pip install -e ".[dev]"
+    pip install mia
 
 Then, you can run tests:
 
