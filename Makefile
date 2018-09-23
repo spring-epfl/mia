@@ -1,4 +1,4 @@
 
 .PHONY: format
 format:
-	black mia tests examples
+	black setup.py mia tests examples

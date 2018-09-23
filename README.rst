@@ -31,7 +31,7 @@ more in the paper by `Shokri et al. <https://arxiv.org/abs/1610.05820>`_
 
 This library:
 
-* Implements the original shadow model attack by `Shokri et al. <https://arxiv.org/abs/1610.05820>`_
+* Implements the original shadow model `attack <https://arxiv.org/abs/1610.05820>`_
 * Is customizable, can use any scikit learn's ``Estimator``-like object as a shadow or attack model
 * Is tested with Keras and PyTorch
 
