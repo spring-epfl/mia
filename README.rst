@@ -2,7 +2,11 @@
 mia
 ###
 
-|build_status| |docs_status|
+|pypi| |license| |build_status| |docs_status|
+
+.. |pypi| image:: https://img.shields.io/pypi/v/mia.svg
+   :target: https://pypi.org/project/mia/
+   :alt: PyPI version
 
 .. |build_status| image:: https://api.travis-ci.com/bogdan-kulynych/mia.svg?branch=master
    :target: https://travis-ci.com/bogdan-kulynych/mia
@@ -12,13 +16,18 @@ mia
    :target: https://mia-lib.readthedocs.io/?badge=latest
    :alt: Documentation status
 
+.. |license| image:: https://img.shields.io/pypi/l/mia.svg
+   :target: https://pypi.org/project/mia/
+   :alt: License
+
+A library for running membership inference attacks (MIA) against machine learning models. Check out
+the `documentation <https://mia-lib.rtfd.io>`.
+
 .. description-marker-do-not-remove
 
-A library for running membership inference attacks (MIA) against machine learning models.
-
 These are attacks against privacy of the training data. In MIA, an attacker tries to guess whether a
-given example was used during training of a target model or not, only by querying it. See more in
-the paper by `Shokri et al. <https://arxiv.org/abs/1610.05820>`_
+given example was used during training of a target model or not, only by querying the model. See
+more in the paper by `Shokri et al. <https://arxiv.org/abs/1610.05820>`_
 
 This library:
 
