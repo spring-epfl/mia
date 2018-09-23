@@ -298,8 +298,8 @@ def test_attack_models_are_created(
     amb.fit(X_shadow, y_shadow, fit_kwargs=dict(epochs=5, verbose=False))
 
     # Predict membership for some training data.
-    membership_proba = amb.predict_proba(X_shadow[:100])
-    assert membership_proba.shape == (len(X_shadow[:100]),)
+    membership_guesses = amb.predict(X_shadow[:100])
+    assert membership_guesses.shape == (len(X_shadow[:100]),)
 
 
 @pytest.mark.parametrize("shadow_model_fn", [torch_shadow_model_fn])
