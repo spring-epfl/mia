@@ -256,7 +256,7 @@ class AttackModelBundle(sklearn.base.BaseEstimator):
         return model
 
     def predict_proba(self, X):
-        result = [0] * X.shape[0]
+        result = np.zeros((X.shape[0], 2))
         shadow_preds = X[:, : self.num_classes]
         classes = X[:, self.num_classes :]
 
@@ -270,9 +270,11 @@ class AttackModelBundle(sklearn.base.BaseEstimator):
 
             membership_preds = model.predict(shadow_preds[class_indices])
             for j, example_index in enumerate(class_indices):
-                result[example_index] = np.squeeze(membership_preds[j])
+                prob = np.squeeze(membership_preds[j])
+                result[example_index, 1] = prob
+                result[example_index, 0] = 1 - prob
 
-        return np.array(result)
+        return result
 
     def predict(self, X):
         probs = self.predict_proba(X)[:, 1]
