@@ -4,8 +4,8 @@ mia
 
 |build_status| |docs_status|
 
-.. |build_status| image:: https://api.travis-ci.org/bogdan-kulynych/mia.svg?branch=master
-   :target: https://travis-ci.org/bogdan-kulynych/mia
+.. |build_status| image:: https://api.travis-ci.com/bogdan-kulynych/mia.svg?branch=master
+   :target: https://travis-ci.com/bogdan-kulynych/mia
    :alt: Build status
 
 .. |docs_status| image:: https://readthedocs.org/projects/mia-lib/badge/?version=latest
@@ -16,9 +16,9 @@ mia
 
 A library for running membership inference attacks (MIA) against machine learning models.
 
- * Implements the original shadow model attack by `Shokri et al. <https://arxiv.org/abs/1610.05820>`_
- * Customizable, can use any sklearn-like object as a shadow or attack model
- * Tested with Keras and PyTorch
+* Implements the original shadow model attack by `Shokri et al. <https://arxiv.org/abs/1610.05820>`_
+* Customizable, can use any sklearn-like object as a shadow or attack model
+* Tested with Keras and PyTorch
 
 .. getting-started-marker-do-not-remove
 
