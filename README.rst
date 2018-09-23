@@ -21,6 +21,7 @@ given example was used during training of a target model or not, only by queryin
 the paper by `Shokri et al. <https://arxiv.org/abs/1610.05820>`_
 
 This library:
+
 * Implements the original shadow model attack by `Shokri et al. <https://arxiv.org/abs/1610.05820>`_
 * Is customizable, can use any sklearn-like object as a shadow or attack model
 * Is tested with Keras and PyTorch
