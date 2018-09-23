@@ -5,7 +5,9 @@ Example membership inference attack against a deep net classifier on the CIFAR10
 try:
     import keras
 except ImportError as e:
-    raise ImportError('You need to have keras installed for this example: pip install keras')
+    raise ImportError(
+        "You need to have keras installed for this example: pip install keras"
+    )
 
 
 import numpy as np
@@ -30,12 +32,11 @@ ATTACK_TEST_DATASET_SIZE = 4000
 
 
 FLAGS = flags.FLAGS
-flags.DEFINE_integer('target_epochs', 12,
-                     'Number of epochs to train target and shadow models.')
-flags.DEFINE_integer('attack_epochs', 12,
-                     'Number of epochs to train attack models.')
-flags.DEFINE_integer('num_shadows', 3,
-                     'Number of epochs to train attack models.')
+flags.DEFINE_integer(
+    "target_epochs", 12, "Number of epochs to train target and shadow models."
+)
+flags.DEFINE_integer("attack_epochs", 12, "Number of epochs to train attack models.")
+flags.DEFINE_integer("num_shadows", 3, "Number of epochs to train attack models.")
 
 
 def get_data():
@@ -116,11 +117,15 @@ def demo(argv):
     # Train the target model.
     print("Training the target model...")
     target_model = target_model_fn()
-    target_model.fit(X_train, y_train, epochs=FLAGS.target_epochs, validation_split=0.1, verbose=True)
+    target_model.fit(
+        X_train, y_train, epochs=FLAGS.target_epochs, validation_split=0.1, verbose=True
+    )
 
     # Train the shadow models.
     smb = ShadowModelBundle(
-        target_model_fn, shadow_dataset_size=SHADOW_DATASET_SIZE, num_models=FLAGS.num_shadows
+        target_model_fn,
+        shadow_dataset_size=SHADOW_DATASET_SIZE,
+        num_models=FLAGS.num_shadows,
     )
 
     # We assume that attacker's data were not seen in target's training.
@@ -134,9 +139,10 @@ def demo(argv):
         attacker_X_train,
         attacker_y_train,
         fit_kwargs=dict(
-            epochs=FLAGS.target_epochs, verbose=True,
+            epochs=FLAGS.target_epochs,
+            verbose=True,
             validation_data=(attacker_X_test, attacker_y_test),
-        )
+        ),
     )
 
     # ShadowModelBundle returns data in the format suitable for the AttackModelBundle.
@@ -144,8 +150,9 @@ def demo(argv):
 
     # Fit the attack models.
     print("Training the attack models...")
-    amb.fit(X_shadow, y_shadow,
-            fit_kwargs=dict(epochs=FLAGS.attack_epochs, verbose=True))
+    amb.fit(
+        X_shadow, y_shadow, fit_kwargs=dict(epochs=FLAGS.attack_epochs, verbose=True)
+    )
 
     # Test the success of the attack.
 
@@ -167,4 +174,3 @@ def demo(argv):
 
 if __name__ == "__main__":
     app.run(demo)
-
