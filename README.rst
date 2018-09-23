@@ -32,7 +32,7 @@ more in the paper by `Shokri et al. <https://arxiv.org/abs/1610.05820>`_
 This library:
 
 * Implements the original shadow model attack by `Shokri et al. <https://arxiv.org/abs/1610.05820>`_
-* Is customizable, can use any sklearn-like object as a shadow or attack model
+* Is customizable, can use any scikit learn's ``Estimator``-like object as a shadow or attack model
 * Is tested with Keras and PyTorch
 
 .. getting-started-marker-do-not-remove
@@ -66,7 +66,7 @@ See the `full runnable example
 <https://github.com/bogdan-kulynych/mia/tree/master/examples/cifar10.py>`_.  Read the details of the
 attack in the `paper <https://arxiv.org/abs/1610.05820>`_.
 
-Let ``target_model_fn()`` return the target model architecture as an sklearn-like classifier. The
+Let ``target_model_fn()`` return the target model architecture as a scikit-like classifier. The
 attack is white-box, meaning the attacker is assumed to know the architecture. Let ``NUM_CLASSES``
 be the number of classes of the classification problem.
 
