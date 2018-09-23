@@ -21,7 +21,7 @@ mia
    :alt: License
 
 A library for running membership inference attacks (MIA) against machine learning models. Check out
-the `documentation <https://mia-lib.rtfd.io>`.
+the `documentation <https://mia-lib.rtfd.io>`_.
 
 .. description-marker-do-not-remove
 
