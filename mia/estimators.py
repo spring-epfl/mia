@@ -269,7 +269,11 @@ class AttackModelBundle(sklearn.base.BaseEstimator):
                 class_indices = data_indices[np.squeeze(classes) == i]
 
             membership_preds = model.predict(shadow_preds[class_indices])
-            for j, class_index in enumerate(class_indices):
-                result[class_index] = np.squeeze(membership_preds[j])
+            for j, example_index in enumerate(class_indices):
+                result[example_index] = np.squeeze(membership_preds[j])
 
         return np.array(result)
+
+    def predict(self, X):
+        probs = self.predict_proba(X)[:, 1]
+        return probs > 0.5
