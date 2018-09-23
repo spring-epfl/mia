@@ -126,3 +126,15 @@ the target model, ``data_in`` the data (tuple ``X, y``) that was used in the tra
 
 .. misc-marker-do-not-remove
 
+======
+Citing
+======
+
+.. code-block::
+
+    @misc{mia,
+        title={{mia}: A library for running membership inference attacks against machine learning models},
+        author={Bogdan Kulynych and Mohammad Yaghini},
+        year=2018
+    }
+
