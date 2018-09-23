@@ -1,4 +1,4 @@
 
 .PHONY: format
 format:
-	black mia tests
+	black mia tests examples
