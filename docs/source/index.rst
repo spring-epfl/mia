@@ -11,6 +11,7 @@ mia
    :caption: Contents:
     
    quickstart
+   usage
    api
 
 Indices and tables

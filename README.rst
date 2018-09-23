@@ -38,3 +38,10 @@ Then, you can run tests:
 
     pytest
 
+.. usage-marker-do-not-remove
+
+=====
+Usage
+=====
+
+See `the example <https://github.com/bogdan-kulynych/mia/tree/master/examples>`_.
