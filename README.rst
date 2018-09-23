@@ -135,6 +135,7 @@ Citing
     @misc{mia,
         title={{mia}: A library for running membership inference attacks against machine learning models},
         author={Bogdan Kulynych and Mohammad Yaghini},
+        howpublished={\url{https://github.com/bogdan-kulynych/mia}},
         year=2018
     }
 
