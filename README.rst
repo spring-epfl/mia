@@ -48,12 +48,6 @@ You can install mia from PyPI:
 
     pip install mia
 
-Then, you can run tests:
-
-.. code-block::  bash
-
-    pytest
-
 .. usage-marker-do-not-remove
 
 =====
