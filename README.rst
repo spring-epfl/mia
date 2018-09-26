@@ -27,9 +27,10 @@ the `documentation <https://mia-lib.rtfd.io>`_.
 
 These are attacks against privacy of the training data. In MIA, an attacker tries to guess whether a
 given example was used during training of a target model or not, only by querying the model. See
-more in the paper by `Shokri et al. <https://arxiv.org/abs/1610.05820>`_
+more in the paper by `Shokri et al <https://arxiv.org/abs/1610.05820>`_. Currently, you can use the
+library to evaluate the robustness of your Keras or PyTorch models to MIA.
 
-This library:
+Features:
 
 * Implements the original shadow model `attack <https://arxiv.org/abs/1610.05820>`_
 * Is customizable, can use any scikit learn's ``Estimator``-like object as a shadow or attack model
