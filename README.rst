@@ -58,7 +58,7 @@ Shokri et al. attack
 ====================
 
 See the `full runnable example
-<https://github.com/bogdan-kulynych/mia/tree/master/examples/cifar10.py>`_.  Read the details of the
+<https://github.com/spring-epfl/mia/tree/master/examples/cifar10.py>`_.  Read the details of the
 attack in the `paper <https://arxiv.org/abs/1610.05820>`_.
 
 Let ``target_model_fn()`` return the target model architecture as a scikit-like classifier. The
@@ -130,7 +130,7 @@ Citing
     @misc{mia,
         title={{mia}: A library for running membership inference attacks against machine learning models},
         author={Bogdan Kulynych and Mohammad Yaghini},
-        howpublished={\url{https://github.com/bogdan-kulynych/mia}},
+        howpublished={\url{https://github.com/spring-epfl/mia}},
         year=2018
     }
 
