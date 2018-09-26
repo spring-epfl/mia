@@ -8,8 +8,8 @@ mia
    :target: https://pypi.org/project/mia/
    :alt: PyPI version
 
-.. |build_status| image:: https://api.travis-ci.com/bogdan-kulynych/mia.svg?branch=master
-   :target: https://travis-ci.com/bogdan-kulynych/mia
+.. |build_status| image:: https://travis-ci.org/spring-epfl/mia.svg?branch=master
+   :target: https://travis-ci.org/spring-epfl/mia
    :alt: Build status
 
 .. |docs_status| image:: https://readthedocs.org/projects/mia-lib/badge/?version=latest
