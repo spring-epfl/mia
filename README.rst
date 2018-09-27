@@ -2,7 +2,7 @@
 mia
 ###
 
-|pypi| |license| |build_status| |docs_status|
+|pypi| |license| |build_status| |docs_status| |zenodo|
 
 .. |pypi| image:: https://img.shields.io/pypi/v/mia.svg
    :target: https://pypi.org/project/mia/
@@ -19,6 +19,10 @@ mia
 .. |license| image:: https://img.shields.io/pypi/l/mia.svg
    :target: https://pypi.org/project/mia/
    :alt: License
+
+.. |zenodo| image:: https://zenodo.org/badge/DOI/10.5281/zenodo.1433745.svg
+   :target: https://zenodo.org/record/1433745
+   :alt: Citing with the Zenodo
 
 A library for running membership inference attacks (MIA) against machine learning models. Check out
 the `documentation <https://mia-lib.rtfd.io>`_.
@@ -127,10 +131,14 @@ Citing
 
 .. code-block::
 
-    @misc{mia,
-        title={{mia}: A library for running membership inference attacks against machine learning models},
-        author={Bogdan Kulynych and Mohammad Yaghini},
-        howpublished={\url{https://github.com/spring-epfl/mia}},
-        year=2018
-    }
+   @misc{mia,
+     author       = {Bogdan Kulynych and
+                     Mohammad Yaghini},
+     title        = {{mia: A library for running membership inference 
+                      attacks against ML models}},
+     month        = sep,
+     year         = 2018,
+     doi          = {10.5281/zenodo.1433744},
+     url          = {https://doi.org/10.5281/zenodo.1433744}
+   }
 
