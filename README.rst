@@ -20,8 +20,8 @@ mia
    :target: https://pypi.org/project/mia/
    :alt: License
 
-.. |zenodo| image:: https://zenodo.org/badge/DOI/10.5281/zenodo.1433745.svg
-   :target: https://zenodo.org/record/1433745
+.. |zenodo| image:: https://zenodo.org/badge/DOI/10.5281/zenodo.1433744.svg
+   :target: https://zenodo.org/record/1433744
    :alt: Citing with the Zenodo
 
 A library for running membership inference attacks (MIA) against machine learning models. Check out
