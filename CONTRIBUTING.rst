@@ -14,6 +14,15 @@ Specify the ``[dev]`` option to install the development packages:
 
     pip install -e ".[dev]"
 
+Running tests
+-------------
+
+Use pytest to run all unit tests.
+
+.. code-block:: bash
+
+    pytest
+
 Building docs
 -------------
 
