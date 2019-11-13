@@ -5,13 +5,13 @@ import re
 from setuptools import setup
 
 
-INSTALL_REQUIRES = ["numpy", "scipy", "scikit-learn", "torch", "tqdm"]
+INSTALL_REQUIRES = ["numpy", "scipy", "scikit-learn"]
 
 SETUP_REQUIRES = ["pytest-runner"]
 
-TEST_REQUIRES = ["pytest", "pytest-lazy-fixture", "tensorflow", "skorch", "keras"]
+TEST_REQUIRES = ["pytest", "pytest-lazy-fixture"]
 
-DEV_REQUIRES = TEST_REQUIRES + ["sphinx", "sphinx_rtd_theme", "black"]
+DEV_REQUIRES = TEST_REQUIRES + ["sphinx", "sphinx_rtd_theme", "black", "pytest-cov"]
 
 
 here = os.path.abspath(os.path.dirname(__file__))
