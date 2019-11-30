@@ -26,5 +26,5 @@ class BaseModelSerializer(object):
         pass
 
     @abc.abstractmethod
-    def save(self, model, model_id):
+    def save(self, model_id, model):
         pass
