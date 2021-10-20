@@ -1,3 +1,9 @@
+--------
+
+**ATTENTION:** This library is not maintained at the moment due to lack of capacity. There's a plan to eventually update it, but meanwhile check out `these <https://github.com/inspire-group/membership-inference-evaluation>`_ `projects <https://github.com/inspire-group/membership-inference-evaluation>`_ for more up-to-date attacks. 
+
+--------
+
 ###
 mia
 ###
