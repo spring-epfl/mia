@@ -9,7 +9,7 @@ Jinja2==2.10
 MarkupSafe==1.0
 numpy==1.15.1
 packaging==17.1
-Pygments==2.2.0
+Pygments==2.7.4
 pyparsing==2.2.1
 pytz==2018.5
 requests==2.19.1
